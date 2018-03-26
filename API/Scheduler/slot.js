@@ -23,34 +23,22 @@ class Slot {
     }
     //allot slots Randomly
 
-    return this.shuffle(slots);
+    return _.shuffle(slots);
   }
 
   generateSlots(AssignedTeachers) {
     let slot = Array(this.totalPeriods).fill("Free");
-    while (slot.filter(period => period == "Free").length > 0) {
+    loop1: for (let i = 0; i < slot.length;) {
       for (let period of AssignedTeachers) {
-        let index = Math.floor(Math.random() * slot.length);
-        if (slot[index] == "Free")
-          slot[index] = period;
+        slot[i] = period;
+        i++;
+        if (i == slot.length) break loop1;
       }
     }
     // let slot = Array(this.totalPeriods).fill().map(() => AssignedTeachers[Math.floor(Math.random() * AssignedTeachers.length)]);
-    return slot;
+    return _.shuffle(slot);
   }
-  shuffle(slots) {
-    var input = slots;
 
-    for (var i = input.length - 1; i >= 0; i--) {
-
-      var randomIndex = Math.floor(Math.random() * (i + 1));
-      var itemAtIndex = _.cloneDeep(input[randomIndex]);
-
-      input[randomIndex] = _.cloneDeep(input[i]);
-      input[i] = itemAtIndex;
-    }
-    return input;
-  }
 }
 
 

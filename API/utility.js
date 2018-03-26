@@ -2,12 +2,12 @@
 
    crossoverRate: 0.7,
    mutationRate: 0.04,
-   populationSize: 500,
+   populationSize: 400,
    maxGeneration: 10,
    threshold: 0.99,
    offSprings: 4,
-   shuffler: 15,
-   max_periods_per_week: 6,
+   shuffler: 2,
+   max_periods_per_week: 8,
    max_periods_per_day: 2,
    max_tests: 1,
    testCase: {
@@ -23,7 +23,7 @@
              "subjectName": "IWT",
              "isLab": false,
              "periodLock": 1,
-             "day": 2
+             "day": -1
            },
            {
              "subjectName": "Data Mining and Warehousing",
@@ -142,7 +142,7 @@
              "subjectName": "library",
              "isLab": false,
              "periodLock": 7,
-             "day": 1
+             "day": 3
            },
            {
              "subjectName": "MondayTest",
@@ -219,7 +219,7 @@
              "subjectName": "library",
              "isLab": false,
              "periodLock": 7,
-             "day": 1
+             "day": 2
            },
            {
              "subjectName": "MondayTest",
@@ -351,7 +351,8 @@
          "Day": 5,
          "Period": 5
        }
-     ]
+     ],
+     "lab_periods_after": 4
    }
 
  };
