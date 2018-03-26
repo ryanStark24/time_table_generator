@@ -12,12 +12,12 @@ module.exports = class Handler {
   }
   handle() {
     this.Delete_duplicate_period_per_day();
-    //console.log("----------------------------- ------------------------------------");
+    console.log("----------------------------- ------------------------------------");
     this.Delete_duplicate_period_per_week();
     //console.log("----------------------------- ------------------------------------");
     this.periodLock_and_lab_constraint();
 
-    this.lone_period_alotter();
+    //this.lone_period_alotter();
     return this.best_table;
   }
   Delete_duplicate_period_per_day() {
@@ -39,8 +39,9 @@ module.exports = class Handler {
         }
       }
     }
-
+   
   }
+  
   Delete_duplicate_period_per_week() {
 
     let Sections = this.data.Sections;
@@ -71,6 +72,19 @@ module.exports = class Handler {
       }
     }
 
+    // console.log("shivaM HERE");
+    // for (let section of this.best_table.Sections) 
+    //   for (let day of section.timetable)
+    //   {
+    //     for (let period of day.periods)
+    //     {
+    //       console.log(period);
+    //     }
+    //     console.log("============================");
+        
+    //   }
+    
+
   }
   periodLock_and_lab_constraint() {
     let to_be_allocated = [];
@@ -79,54 +93,112 @@ module.exports = class Handler {
       let section_compare = this.best_table.Sections[section_index].timetable;
       for (let subject of section.subjects) {
         if (subject.periodLock <= 0 || subject.day <= 0) continue;
-        let Buffer = this.clear_periods(_.cloneDeep(section_compare), subject);
+        //console.log("subject name:"+subject.subjectName)
+        let Buffers = this.clear_periods(_.cloneDeep(section_compare), subject);
+        Buffer=Buffers.Buffer;
+        section_compare=Buffers.section_compare;
+        Buffer = _.uniqBy(Buffer, 'subject');
 
-        // Buffer = _.uniqBy(Buffer, 'subject');
-        // //PeriodLock management for regular periods
+    
+        
+        
+        
+        // PeriodLock management for regular periods
         if (!subject.isLab) {
-          console.log(subject.day);
-          console.log(subject.periodLock);
-          console.log(section_compare[subject.day - 1]);
-          let curr = section_compare[subject.day - 1].periods[subject.periodLock - 1];
-          if (curr != "Free") to_be_allocated.push((curr));
+          // console.log("ISLAB");
+          
+          // console.log(subject.subjectName);
+          // console.log(subject.day);
+          // console.log(subject.periodLock);
+          // console.log(section_compare[subject.day - 1]);
+          let curr = section_compare[subject.day - 1].periods[subject.periodLock - 1];          
+          
+          if (curr != "Free"  )
+          {
+
+            // console.log("freewala");
+            // console.log(curr);
+            
+            
+            // console.log("-------------------------------------------");
+            to_be_allocated.push((curr))
+          
+          } 
           //  if (found == undefined || found.length == 0) found = this.find_periods(to_be_alloted, subject);
           section_compare[subject.day - 1].periods[subject.periodLock - 1] = _.cloneDeep(Buffer[0]);
-
+          
         }
         //     //periodLock management for Lab periods
-        //     if (subject.isLab) {
-        //       if (subject.periodLock < section_compare[subject.day - 1].periods.length) {
-        //         let i = 0;
-        //         let insert_periods = this.find_periods(Buffer, subject);
-        //         //    if (insert_periods == undefined || insert_periods.length == 0) insert_periods = this.find_periods(to_be_alloted, subject);
-        //         while (insert_periods.length < Utility.max_periods_per_day) insert_periods.push(insert_periods[0]);
-        //         while (i < insert_periods.length) {
-        //           let curr = section_compare[subject.day - 1].periods[subject.periodLock - 1 + i];
-        //           if (curr != "Free") to_be_allocated.push(_.cloneDeep(curr));
-        //           section_compare[subject.day - 1].periods[subject.periodLock - 1 + i] = _.cloneDeep(insert_periods[i]);
-        //           i++;
-        //         }
-        //
-        //       } else {
-        //         let insert_periods = this.find_periods(Buffer, subject);
-        //         //if (insert_periods.length == 0) insert_periods = this.find_periods(to_be_alloted, subject);
-        //         while (insert_periods.length < Utility.max_periods_per_day) insert_periods.push(insert_periods[0]);
-        //         let i = insert_periods.length;
-        //         while (i > 0) {
-        //           let curr = section_compare[subject.day - 1].periods[subject.periodLock - i];
-        //           if (curr != "Free") to_be_allocated.push(_.cloneDeep(curr));
-        //           section_compare[subject.day - 1].periods[subject.periodLock - i] = _.cloneDeep(insert_periods[i]);
-        //           i--;
-        //         }
-        //       }
-        //     }
-        //   }
+            if (subject.isLab) {
+              
+              if (subject.periodLock < section_compare[subject.day - 1].periods.length)
+               {
+                let i = 0;
+              
+                
+                let insert_periods = this.find_periods(Buffer, subject);
+
+                
+              //if (insert_periods == undefined || insert_periods.length == 0) insert_periods = this.find_periods(to_be_alloted, subject);
+                while (insert_periods.length < Utility.max_periods_per_day) insert_periods.push(insert_periods[0]);
+                
+                while (i < insert_periods.length) {
+                  let curr = section_compare[subject.day - 1].periods[subject.periodLock - 1 + i];
+                  if (curr != "Free" )
+                   {
+                    // console.log("freewala");
+                    // console.log(curr);
+                    
+                    // console.log("-------------------------------------------");
+                    
+                  to_be_allocated.push(_.cloneDeep(curr));
+                  }
+                  section_compare[subject.day - 1].periods[subject.periodLock - 1 + i] = _.cloneDeep(insert_periods[i]);    
+                  i++;
+                }
+                // console.log("--------------------------------------");
+                // console.log(to_be_allocated);
+        
+              } 
+              else 
+              {
+                
+                
+                let insert_periods = this.find_periods(Buffer, subject);
+               
+                //if (insert_periods.length == 0) insert_periods = this.find_periods(to_be_alloted, subject);
+                while (insert_periods.length < Utility.max_periods_per_day) insert_periods.push(insert_periods[0]);
+                
+                
+                let i = insert_periods.length;
+                while (i > 0) {
+                  let curr = section_compare[subject.day - 1].periods[subject.periodLock - i];
+                  if (curr != "Free" ) {
+                    // console.log("freewala");
+                    // console.log(curr);
+                    // console.log("-------------------------------------------");
+                    
+                    
+                    to_be_allocated.push(_.cloneDeep(curr) )
+                }
+                  section_compare[subject.day - 1].periods[subject.periodLock - i] = _.cloneDeep(insert_periods[i-1]);
+                  i--;
+                }
+                // console.log("--------------------------------------");
+                // console.log(to_be_allocated); 
+              }
+              
+            }
+          }
+          
       }
+      console.log(to_be_allocated);
+      
     }
-    // to_be_allocated = _.cloneDeep(_.uniqBy(to_be_allocated, 'subject'));
-    console.log(to_be_allocated);
+    // to_be_allocated = _.cloneDeep(_.uniqBy(to_be_allocated, 'subject'));  
+    
     // this.lab_alloter(to_be_allocated);
-  }
+  
 
   lab_alloter(to_be_allocated) {
     for (let section of this.data.Sections) {
@@ -135,7 +207,9 @@ module.exports = class Handler {
 
         if (subject.periodLock > 0 && subject.day > 0) continue;
         if (!subject.isLab) continue;
-        let Buffer = this.clear_periods(section_compare, subject);
+        let Buffers = this.clear_periods(_.cloneDeep(section_compare), subject);
+        Buffer=Buffers.Buffer;
+        section_compare=Buffers.section_compare;
         //1
 
         //1- end
@@ -318,6 +392,8 @@ module.exports = class Handler {
   }
   clear_periods(section_compare, subject) {
     let Buffer = [];
+    // console.log("here buffer");
+    // console.log("subject name:"+subject.subjectName)
     for (let day of section_compare) {
       for (let period of day.periods) {
         if (period === "Free") continue;
@@ -326,12 +402,25 @@ module.exports = class Handler {
           let index = day.periods.indexOf(period);
           Buffer.push(period);
           section_compare[index1].periods[index] = "Free";
-
+           
         }
       }
     }
-    return Buffer;
+        // console.log(subject.subjectName);
+        // console.log("*******************");
+        
+        // for (let day of section_compare) 
+      
+        //   for (let period of day.periods)
+        //   {
+        //     console.log(period);
+        //   }
+        //   console.log("============================");
+    
+    return {"Buffer":Buffer,"section_compare":section_compare};
   }
+
+  
   find_periods(Buffer, subject) {
     return Buffer.splice(_.filter(Buffer, period => period.subject == subject.subjectName)[0], 1);
   }

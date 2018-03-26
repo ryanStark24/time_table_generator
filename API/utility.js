@@ -22,7 +22,7 @@
            {
              "subjectName": "IWT",
              "isLab": false,
-             "periodLock": 1,
+             "periodLock": -1,
              "day": -1
            },
            {
@@ -118,25 +118,19 @@
              "subjectName": "SEPM Lab",
              "isLab": true,
              "periodLock": -1,
-             "day": 5
-           },
-           {
-             "subjectName": "CG Lab",
-             "isLab": true,
-             "periodLock": 5,
-             "day": 2
+             "day": -1
            },
            {
              "subjectName": "AJP Lab",
              "isLab": true,
              "periodLock": -1,
-             "day": 3
+             "day": -1
            },
            {
              "subjectName": "CN Lab",
              "isLab": true,
              "periodLock": -1,
-             "day": 5
+             "day": -1
            },
            {
              "subjectName": "library",
@@ -149,6 +143,12 @@
              "isLab": false,
              "periodLock": 1,
              "day": 1
+           },
+           {
+             "subjectName": "CG Lab",
+             "isLab": true,
+             "periodLock": 5,
+             "day": 2
            }
          ]
        },
@@ -195,13 +195,7 @@
              "subjectName": "OOP Lab",
              "isLab": true,
              "periodLock": -1,
-             "day": 4
-           },
-           {
-             "subjectName": "DS Lab",
-             "isLab": true,
-             "periodLock": 5,
-             "day": 2
+             "day": -1
            },
            {
              "subjectName": "CHM Lab",
@@ -226,6 +220,12 @@
              "isLab": false,
              "periodLock": 1,
              "day": 1
+           },
+           {
+             "subjectName": "DS Lab",
+             "isLab": true,
+             "periodLock": 7,
+             "day": 3
            }
          ]
        }
