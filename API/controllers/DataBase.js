@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 const DATABASE_URI = 'mongodb://RyanStark24:' + process.env.MONGO_ATLAS_PW +
+=======
+const DATABASE_URI = 'mongodb://RyanStark24:' + encodeURIComponent(process.env.MONGO_ATLAS_PW) +
+>>>>>>> 472f46794cf59847916cb02bda603c83c23023e7
   '@timetablegenerator-shard-00-00-govcj.mongodb.net:27017,timetablegenerator-shard-00-01-govcj.mongodb.net:27017,' +
   'timetablegenerator-shard-00-02-govcj.mongodb.net:27017/test?ssl=true&replicaSet=TimeTableGenerator-shard-0&authSource=admin';
 
@@ -27,4 +31,8 @@ process.on('SIGINT', function() {
     console.log('Mongoose default connection disconnected through app termination');
     process.exit(0);
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 472f46794cf59847916cb02bda603c83c23023e7

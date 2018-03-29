@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // const mongoose = require('mongoose');
 const userRoutes = require('./API/routes/users');
 const timetableRoutes = require('./API/routes/timetable');
-const DataBase = require('./api/controllers/database');
+// const DataBase = require('./API/controllers/Database');
 const path = require('path');
 app.set('views', path.join(__dirname, 'API/views'));
 app.set('view engine', 'jade');
