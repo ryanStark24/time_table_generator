@@ -30,53 +30,54 @@ class Generator {
 
   TeachertoSectionAlotter(populationCounter) {
     //Create Slots
-    // for (let i = populationCounter; i >= 0; i--) {
-    if (populationCounter-- <= 0) return 1;
-    //generate Slots
-    for (var section of this.Sections) {
-      for (var subject of section.subjects) {
-        for (var teacher of this.Teachers) {
+    for (let i = populationCounter; i >= 0; i--) {
+      if (populationCounter-- <= 0) return 1;
+      //generate Slots
+      for (var section of this.Sections) {
+        for (var subject of section.subjects) {
+          for (var teacher of this.Teachers) {
 
-          //console.log(subject);
-          var Tsubjects = teacher.subjects;
+            //console.log(subject);
+            var Tsubjects = teacher.subjects;
 
-          var condition = Tsubjects.includes(subject.subjectName) && this.doesPeriodMatch(this.Periods, subject.subjectName, section);
-          if (condition) {
-            this.Periods.push(new Object({
-              "section": section.name,
-              "subject": subject,
-              "teacher": new Object({ "name": teacher.name, "subjects": teacher.subjects, "priority": teacher.priority })
-            })); //period object tha
+            var condition = Tsubjects.includes(subject.subjectName) && this.doesPeriodMatch(this.Periods, subject.subjectName, section);
+            if (condition) {
+              this.Periods.push(new Object({
+                "section": section.name,
+                "subject": subject,
+                "teacher": new Object({ "name": teacher.name, "subjects": teacher.subjects, "priority": teacher.priority })
+              })); //period object tha
+
+            }
 
           }
-
         }
       }
-    }
-    //Generating a slot ,creating Genes and by those making a new chromose and pushing it to the list
-    let slot = new Slot(this.Periods, this.Sections, this.totalPeriods);
-    let myGene = new Gene();
-    let Genes = this.Sections.map(section => myGene.GeneCreator(slot.slots, section.name)); // Gene obkject tha
-    // this.firstList.push());
+      //Generating a slot ,creating Genes and by those making a new chromose and pushing it to the list
+      let slot = new Slot(this.Periods, this.Sections, this.totalPeriods);
+      let myGene = new Gene();
+      let Genes = this.Sections.map(section => myGene.GeneCreator(slot.slots, section.name)); // Gene obkject tha
+      this.firstList.push(new Chromosome(Genes, this.Sections, this.DaysDescription, this.totalPeriods));
 
-    // }
-    return new Chromosome(Genes, this.Sections, this.DaysDescription, this.totalPeriods);
+    }
+    // return new Chromosome(Genes, this.Sections, this.DaysDescription, this.totalPeriods);
   }
   // Main method which start the process
   generate() {
 
-    let timetable = this.InitialPopulation();
-    timetable = this.finalResultGenerator(timetable.Genes, timetable.fitness);
-    // let timetable = this.createNewGenerations();
+    this.InitialPopulation();
+    // let timetable =
+    // timetable = this.finalResultGenerator(timetable.Genes, timetable.fitness);
+    let timetable = this.createNewGenerations();
     return timetable;
   }
 
   //Creates the Very first population to start Genetic Algorithm
   InitialPopulation() {
 
-    return this.TeachertoSectionAlotter(populationSize);
+    this.TeachertoSectionAlotter(populationSize);
     //sorting the population according to their fitness in descending order
-    //this.population_fitness_normalizer();
+    this.population_fitness_normalizer();
 
   }
 

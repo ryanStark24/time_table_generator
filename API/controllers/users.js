@@ -225,7 +225,7 @@ module.exports = {
 function GenericError(res, err) {
   return console.error(err);
   res.status(400).json({
-    error: err
+    error: "Authentication Failed"
   });
   res.end();
 }
