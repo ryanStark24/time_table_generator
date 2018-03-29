@@ -39,6 +39,8 @@ process.on('SIGINT', function() {
     process.exit(0);
   });
 });
+
+
 app.set('views', path.join(__dirname, 'API/views'));
 app.set('view engine', 'jade');
 app.use(morgan('dev'));
