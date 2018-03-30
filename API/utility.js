@@ -235,8 +235,7 @@
          "subjects": [
            "Computional Mathematics",
            "Discrete Mathematics"
-         ],
-         "priority": 0
+         ]
        },
        {
          "name": "RK",
@@ -245,8 +244,7 @@
            "Data Structures",
            "OS Lab",
            "DS Lab"
-         ],
-         "priority": 6
+         ]
        },
        {
          "name": "Neha Taori",
@@ -255,16 +253,14 @@
            "IWT",
            "Software Technology Lab",
            "GUI Lab"
-         ],
-         "priority": 0
+         ]
        },
        {
          "name": "Vijaya Chaturdevi",
          "subjects": [
            "SEPM",
            "SEPM Lab"
-         ],
-         "priority": 0
+         ]
        },
 
        {
@@ -274,8 +270,7 @@
            "Computer Graphics",
            "CG Lab",
            "AI Lab"
-         ],
-         "priority": 0
+         ]
        },
        {
          "name": "Vibha Pandey",
@@ -284,8 +279,7 @@
            "IMT",
            "AJP Lab",
            "Network Security Lab"
-         ],
-         "priority": 0
+         ]
        },
        {
          "name": "Govind Singh",
@@ -294,8 +288,7 @@
            "OOP",
            "OOP Lab",
            "CN Lab"
-         ],
-         "priority": 0
+         ]
        },
        {
          "name": "Vikas Singh",
@@ -303,8 +296,7 @@
            "CSA",
            "ERP",
            "CHM Lab"
-         ],
-         "priority": 2
+         ]
        },
 
        {
@@ -312,16 +304,14 @@
          "subjects": [
            "Compiler Design",
            "Data Mining and Warehousing"
-         ],
-         "priority": 1
+         ]
        },
        {
          "name": "Free Teacher",
          "subjects": [
            "library",
            "MondayTest"
-         ],
-         "priority": -1
+         ]
        }
 
 
