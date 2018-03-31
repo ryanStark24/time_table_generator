@@ -172,26 +172,28 @@ module.exports = class Handler {
         }
         total_free_periods.sort((a, b) => b.count - a.count);
 
-        change_day: for (let day of total_free_periods) {
+        for (let day of total_free_periods) {
+
           let Day = _.find(section_compare, obj => obj.day == day.day).periods;
-          for (let i = this.data.lab_periods_after + 1; i < Day.length - 1; i++) {
-            let curr = Day[i] === "Free";
-            let back = Day[i + 1] === "Free";
-            let front = Day[i - 1] === "Free";
+          change_day: for (let i = Day.length - 1; i > this.data.lab_periods_after + 1; i--) {
+
+            let curr = Day[i - 1] === "Free";
+            let back = Day[i] === "Free";
+            let front = Day[i - 2] === "Free";
             if (curr) {
 
               let status = this.decide_where_to_allot(Section_subjects, Buffer, subject, to_be_allocated, Day, i, back, front);
 
               if (!status) continue change_day;
-              else days_processed.push(day.day);
+              else { days_processed.push(day.day); continue change_subject; }
 
-            } else if (!curr && !this.isLocked(Section_subjects, Day[i])) {
+            } else if (!curr && !this.isLocked(Section_subjects, Day[i - 1])) {
               let status = this.decide_where_to_allot(Section_subjects, Buffer, subject, to_be_allocated, Day, i, back, front);
               if (!status) continue change_day;
-              else days_processed.push(day.day);
+              else { days_processed.push(day.day); continue change_subject; }
 
             } else continue change_day;
-            continue change_subject;
+
           }
         }
       }
@@ -202,27 +204,24 @@ module.exports = class Handler {
     let temp;
     let Flag = [0, 0];
     if (back) {
-      console.log(back);
-      console.log(subject.subjectName);
-      console.log(Day[i + 1]);
-      Day[i + 1] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
+      Day[i] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
       Flag[0] = 1;
-    } else if (!back && !this.isLocked(Section_subjects, Day[i + 1])) {
-      temp = _.cloneDeep(Day[i + 1]);
-      Day[i + 1] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
+    } else if (!back && !this.isLocked(Section_subjects, Day[i])) {
+      temp = _.cloneDeep(Day[i]);
+      Day[i] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
       Flag[0] = 1;
     } else if (front) {
-      Day[i - 1] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
+      Day[i - 2] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
       Flag[1] = 1;
-    } else if (!front && !this.isLocked(Section_subjects, Day[i - 1])) {
-      temp = _.cloneDeep(Day[i - 1]);
-      Day[i - 1] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
+    } else if (!front && !this.isLocked(Section_subjects, Day[i - 2])) {
+      temp = _.cloneDeep(Day[i - 2]);
+      Day[i - 2] = _.cloneDeep(this.find_periods(Buffer, subject) || this.find_periods(to_be_allocated, subject));
       Flag[1] = 1;
     } else return false;
 
-    Day[i] = (Flag[0] % 2 == 0) ? Day[i - 1] : Day[i + 1];
-    if (Flag[0] % 2 == 0 && back && temp) Day[i + 1] = _.cloneDeep(temp);
-    else if (Flag[1] % 2 == 0 && front && temp) Day[i - 1] = _.cloneDeep(temp);
+    Day[i - 1] = (Flag[0] % 2 == 0) ? Day[i - 2] : Day[i];
+    if (Flag[0] % 2 == 0 && back && temp) Day[i] = _.cloneDeep(temp);
+    else if (Flag[1] % 2 == 0 && front && temp) Day[i - 2] = _.cloneDeep(temp);
     else if (temp) to_be_allocated.push(_.cloneDeep(temp));
     return true;
   }
@@ -238,8 +237,9 @@ module.exports = class Handler {
     loop1: while (this.free_periods_remaining() > 0) {
       let Data = this.find_lone_periods();
       if (count > 20) break;
+
       for (let section of this.best_table.Sections) {
-        if (Data.period_priority[section.sectionName].length == 0) count++;
+        if (Data.period_priority[section.sectionName].length == 0) { count++; continue }
         Data.period_priority[section.sectionName].sort((a, b) => a.count - b.count);
         loop2: for (let x of Data.period_priority[section.sectionName]) {
 
@@ -298,13 +298,17 @@ module.exports = class Handler {
           Subject.subject = subject.subjectName;
           Subject.count = count;
           period_priority[section.name].push(Subject);
+          console.log(period_priority[section.name]);
         } else _.remove(periods_remaining, period => period.subject == subject.subjectName);
       }
+
     }
     periods_remaining = _.uniqBy(periods_remaining, 'subject');
 
     return { periods_remaining, period_priority };
   }
+
+
 
 
   find_periods(Buffer, subject) {

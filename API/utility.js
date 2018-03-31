@@ -7,7 +7,7 @@
    threshold: 0.99,
    offSprings: 4,
    shuffler: 2,
-   max_periods_per_week: 8,
+   max_periods_per_week: 9,
    max_periods_per_day: 2,
    max_tests: 1,
    testCase: {
