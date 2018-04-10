@@ -20,7 +20,7 @@ module.exports = {
         if (!doc) return res.status(200).json({
           msg: "No Data"
         });
-        console.log(doc);
+        // console.log(doc);
         res.on('finish', function(err, result) { mongoose.disconnect });
         res.status(200).json({
           count: doc.length,
@@ -37,7 +37,7 @@ module.exports = {
         if (doc.length == 0) return res.status(400).json({
           msg: "No Data"
         });
-        console.log(doc);
+        // console.log(doc);
         res.status(200).json({
           count: doc.length,
           data: DataMapper(doc),
@@ -107,7 +107,7 @@ module.exports = {
             JWT_KEY, { expiresIn: "2h" });
 
           if (output == true) {
-            console.log(result);
+            // console.log(result);
             res.status(200).json({
               User: {
                 id: result[0]._id,
@@ -152,7 +152,7 @@ module.exports = {
             }
           });
         }
-        console.log(doc);
+        // console.log(doc);
         res.status(200).json({
           msg: 'Data updated',
           request: {
@@ -182,7 +182,7 @@ module.exports = {
             }
           });
         }
-        console.log(doc);
+        // console.log(doc);
         res.status(200).json({
           status: {
             ObjectId: id,
@@ -207,7 +207,7 @@ module.exports = {
             }
           });
         }
-        console.log(doc);
+        // console.log(doc);
         res.status(200).json({
           status: {
             msg: "Objects Deleted"
@@ -231,7 +231,7 @@ function GenericError(res, err) {
 }
 
 function DataMapper(dat) {
-  console.log(dat);
+  // console.log(dat);
   return dat.map(data => {
     return {
       name: data.firstname + " " + data.lastname,

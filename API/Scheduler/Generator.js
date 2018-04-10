@@ -120,12 +120,12 @@ class Generator {
       //  console.log("----------------------------------------------------------> current threshold: " + (threshold - adjuster) + " similars: " + similar_fitness + " curr son fit: " + son_fitness);
 
       if (this.firstList[0].fitness >= threshold || generation >= maxGenerations) { //condition to break loop if son staisfies Constraints
-        console.log(" ");
-        console.log(" ");
-        console.log(" ");
-        console.log(" ");
-        console.log("--------------------------------------------------------------------------");
-        console.log("optimal TimeTable According to given Parameters is found at Generation: " + generation + "  Population Number: " + (populationcounter - 1) + "  with a fitness of :" + this.firstList[0].fitness);
+        // console.log(" ");
+        // console.log(" ");
+        // console.log(" ");
+        // console.log(" ");
+        // console.log("--------------------------------------------------------------------------");
+        // console.log("optimal TimeTable According to given Parameters is found at Generation: " + generation + "  Population Number: " + (populationcounter - 1) + "  with a fitness of :" + this.firstList[0].fitness);
         return this.finalResultGenerator(this.firstList[0].Genes, this.firstList[0].fitness);
       }
       generation++;
