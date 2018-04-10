@@ -14,10 +14,11 @@ router.post('/', checkAuth, (req, res, next) => {
   // let data = new Data();
 
   let final_table = new tester(req.body);
-  // res.status(200).json({
-  //   timetable: final_table
-  // });
-  res.render('timetable', { title: 'TimeTable', timetable: final_table });
+  console.log(final_table)
+  res.status(200).json({
+    timetable:final_table.Sections
+  });
+  // res.render('timetable', { title: 'TimeTable', timetable: final_table });
 });
 
 module.exports = router;
