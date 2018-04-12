@@ -9,7 +9,7 @@ let days = ["Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday"];
 
 class Tester {
   constructor(Json) {
-    this.data = new Data().getDatafromJSON(Json || Utility.testCase);
+    this.data = Data.getDatafromJSON(Json);
     this.best_table = null;
     return this.main();
   }
@@ -20,10 +20,10 @@ class Tester {
   }
 
   main() {
-
-    let best = 100;
+    let best=100;
+   if (this.data instanceof String) return this.data;
     for (let j = 0; j < Utility.max_tests; j++) {
-      console.log("---------------------------------------------------->test Case: " + (j + 1));
+      // console.log("---------------------------------------------------->test Case: " + (j + 1));
       let table = this.test();
       let fitness = this.TeacherCollision(table);
       if (fitness < best) {
@@ -33,9 +33,9 @@ class Tester {
     }
 
     this.best_table = new Handler(this.best_table, this.data);
-    this.display();
+    // this.display();
 
-    console.log("End");
+    // console.log("End");
     return this.best_table;
   }
 
@@ -108,4 +108,4 @@ class Tester {
 module.exports = Tester;
 
 
-// new Tester();
+// new Tester({});

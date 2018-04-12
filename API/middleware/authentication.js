@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const JWT_KEY = "anSHul2114CraNK";
 module.exports = (req, res, next) => {
   const header = req.headers.authorization;
-  console.log(header);
+  // console.log(header);
   if (header == null) { return res.status(403).json({ msg: "Authentication Failed {Token Not Provided}" }); }
   const token = header.trim().split(" ")[1];
   try {

@@ -298,7 +298,7 @@ module.exports = class Handler {
           Subject.subject = subject.subjectName;
           Subject.count = count;
           period_priority[section.name].push(Subject);
-          console.log(period_priority[section.name]);
+          // console.log(period_priority[section.name]);
         } else _.remove(periods_remaining, period => period.subject == subject.subjectName);
       }
 

@@ -14,10 +14,16 @@ router.post('/', checkAuth, (req, res, next) => {
   // let data = new Data();
 
   let final_table = new tester(req.body);
-  console.log(final_table)
+      if(final_table instanceof String){
+      res.status(403).json({
+        error:final_table
+      });
+    }else{
   res.status(200).json({
     timetable:final_table.Sections
   });
+}
+res.end();
   // res.render('timetable', { title: 'TimeTable', timetable: final_table });
 });
 
